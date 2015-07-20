@@ -1,0 +1,24 @@
+train:
+  app_title: '[____] Train'
+  logo_url: /static/img/zefr.svg
+  mail:
+    sender: no-reply@example.com
+    host: localhost
+    port: 25
+    username:
+    password:
+    ssl: false
+  secrets:
+    session_key: secret key for sessions
+    signing_key: secret key for signed tokens
+  bcrypt:
+    iterations: 12
+  slack_channel: "#api-sandbox"
+  slack_token: x
+  login_methods:
+    password: true
+    cas: true
+  registration:
+    limit_domains: false
+    email_domain: "@example.com"
+  cas_url: https://cas.example.com

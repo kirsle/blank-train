@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html ng-app="train-station">
+    <head>
+      <title>[[title|safe]]</title>
+      <script src="[[url_for('static', filename='bower_components/moment/moment.js')]]" charset="utf-8"></script>
+      <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="[[url_for('static', filename='bower_components/normalize.css/normalize.css')]]">
+      <link rel="stylesheet" href="[[url_for('static', filename='bower_components/fontawesome/css/font-awesome.css')]]">
+      <link rel="stylesheet" href="[[url_for('static', filename='css/station.css')]]">
+    </head>
+    <body ng-controller="mainCtrl" ng-cloak>
+
+
+        <a ng-click="logout()" ng-if="status.loggedIn" class="logout-link">Logout <i class="fa fa-key"></i></a>
+
+        <div class="logo">
+            <img src="[[logo]]" alt="[[title]]">
+        </div>
+        <!-- Login/Register -->
+        <div ng-show="!status.loggedIn" class="login-tab">
+          <h1>Log In or Register</h1>
+          <p ng-show="status.registrationRules.limit_domains">
+            Note: {{status.registrationRules.email_domain}} accounts only!
+          </p>
+
+          <div ng-show="status.loginMethods.password">
+            <div class="label">Email:</div>
+            <input type="text" id="txt-username" ng-model="username"><br>
+            <br>
+            <div class="label">Password:</div>
+            <input type="password" id="txt-password" ng-model="password">
+              <br>
+              <br>
+          </div>
+          <button type="button" id="btn-login" ng-show="status.loginMethods.password" ng-click="signIn()">Sign In</button>
+          <button type="button" id="btn-register" ng-show="status.loginMethods.password" ng-click="register()">Register</button>
+          <button type="button" id="btn-cas" ng-show="status.loginMethods.cas" ng-click="casSignIn()">CAS Login</button>
+        </div>
+
+        <!-- All Trains -->
+        <div ng-show="status.loggedIn" class="train-station" ng-class="{'tuck': status.activePage != 'index'}">
+            <h1>Train Station</h1>
+
+            <ul>
+                <li ng-repeat="train in trains" ng-click="viewTrain(train)">{{train.name}} | <span am-time-ago="train.expires"></span></li>
+            </ul>
+
+            <button type="button" ng-click="activateTrainForm()">Add Train</button>
+        </div>
+
+
+        <!-- Train Form -->
+        <div class="train-form" ng-class="{'active': status.newTrain}">
+            <h1>Conduct New Train</h1>
+            <input type="text" placeholder="Train Name..." ng-model="newTrainName">
+            <select ng-model="newTrainExpires">
+                <option value="" disabled selected>Departs...</option>
+                <option value="60">1 minute</option>
+                <option value="300">5 minutes</option>
+                <option value="1800">30 minutes</option>
+                <option value="3600">1 hour</option>
+            </select>
+
+            <button type="button" ng-click="createTrain()">Create Train</button>
+            <button type="button" ng-click="status.newTrain = false; status.activePage = 'index'">Cancel Train</button>
+        </div>
+
+        <!-- Train Page -->
+        <div class="train-details" ng-class="{'active': status.activePage == 'train'}">
+            <h1>{{status.currentTrain.name}}</h1>
+            <h4 am-time-ago="status.currentTrain.expires"></h4>
+            <ul>
+                <li ng-repeat="passenger in status.currentTrain.passengers">
+                    {{passenger}}
+                </li>
+            </ul>
+            <button ng-click="deleteTrain(status.currentTrain)" ng-show="status.currentTrain.owner === status.currentUser" class="delete-train">
+                <i class="fa fa-trash"></i>
+            </button>
+            <button ng-click="boardTrain()" ng-hide="status.currentTrain.passengers.indexOf(status.currentUser) > -1">Board Train</button>
+            <button ng-click="leaveTrain()" ng-show="status.currentTrain.passengers.indexOf(status.currentUser) > -1">Leave Train</button>
+            <button ng-click="status.activePage = 'index'">Back to Station</button>
+        </div>
+
+
+
+    <script type="text/javascript">
+        window.user = [[user|tojson]];
+        window.config = {
+          loginMethods: [[config.login_methods|tojson]],
+          registration: [[config.registration|tojson]]
+        };
+    </script>
+    <script src="[[url_for('static', filename='bower_components/moment/moment.js')]]" charset="utf-8"></script>
+    <script src="[[url_for('static', filename='bower_components/angular/angular.js')]]" charset="utf-8"></script>
+    <script src="[[url_for('static', filename='bower_components/angular-moment/angular-moment.js')]]" charset="utf-8"></script>
+    <script src="[[url_for('static', filename='js/app.js')]]" charset="utf-8"></script>
+    </body>
+</html>

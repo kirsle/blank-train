@@ -1,0 +1,6 @@
+*.pyc
+*.pyo
+database.sqlite
+settings.yml
+train/static/bower_components/
+.DS_Store

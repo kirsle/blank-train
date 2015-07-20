@@ -1,0 +1,25 @@
+{
+  "name": "blank-train",
+  "version": "0.0.0",
+  "homepage": "https://github.com/kirsle/blank-train",
+  "description": "Kick Ass Trains Bitch!",
+  "main": "app.js",
+  "authors": [
+    "Kevin / Noah"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "moment": "~2.10.3",
+    "angular-moment": "~0.10.1",
+    "normalize.css": "~3.0.3",
+    "fontawesome": "~4.3.0",
+    "angularjs": "~1.4.0"
+  }
+}
