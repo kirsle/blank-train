@@ -53,13 +53,8 @@
         <div class="train-form" ng-class="{'active': status.newTrain}">
             <h1>Conduct New Train</h1>
             <input type="text" placeholder="Train Name..." ng-model="newTrainName">
-            <select ng-model="newTrainExpires">
-                <option value="" disabled selected>Departs...</option>
-                <option value="60">1 minute</option>
-                <option value="300">5 minutes</option>
-                <option value="1800">30 minutes</option>
-                <option value="3600">1 hour</option>
-            </select>
+            <input type="datetime-local" id="datetimepicker" ng-model="newTrainExpires">
+
 
             <button type="button" ng-click="createTrain()">Create Train</button>
             <button type="button" ng-click="status.newTrain = false; status.activePage = 'index'">Cancel Train</button>

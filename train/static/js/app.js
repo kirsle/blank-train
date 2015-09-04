@@ -60,6 +60,7 @@ app.controller("mainCtrl", function($scope, $http, $location) {
 
     $scope.createTrain = function(){
         console.log($scope.newTrainName);
+        console.log($scope.newTrainExpires)
         $http.post('/v1/train/', {
             "name": $scope.newTrainName,
             "expires": $scope.newTrainExpires
@@ -146,3 +147,4 @@ app.controller("mainCtrl", function($scope, $http, $location) {
         window.location = "/v1/account/cas_login";
     };
 });
+
