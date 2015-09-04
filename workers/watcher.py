@@ -88,7 +88,7 @@ def get_users(emails):
     usernames = set()
     for u in users["members"]:
         if not "email" in u["profile"]:
-            print("No email for user " +  u.get("name"))
+            print("No email for user {}".format(u.get("name")))
             continue
         if u["profile"]["email"] in emails:
             name = re.sub(r'[^A-Za-z0-9]', '', u["name"])

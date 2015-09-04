@@ -1,4 +1,5 @@
 from __future__ import unicode_literals, absolute_import
+from six import text_type
 
 """Endpoints for account management."""
 
@@ -31,8 +32,8 @@ def login_required(f):
 
 @mod.route("/login", methods=["POST"])
 @use_kwargs({
-    "username": Arg(str, required=True, use=lambda s: s.lower()),
-    "password": Arg(str, required=True),
+    "username": Arg(text_type, required=True, use=lambda s: s.lower()),
+    "password": Arg(text_type, required=True),
 })
 def login(username, password):
     """Log into the app."""
@@ -61,7 +62,7 @@ def cas_login():
 
 @mod.route("/cas_callback", methods=["GET"])
 @use_kwargs({
-    "ticket": Arg(str, required=True),
+    "ticket": Arg(text_type, required=True),
 })
 def cas_callback(ticket):
     c = get_config()
@@ -105,8 +106,8 @@ def logout():
 
 @mod.route("/register", methods=["POST"])
 @use_kwargs({
-    "username": Arg(str, required=True, use=lambda s: s.lower()),
-    "password": Arg(str, required=True),
+    "username": Arg(text_type, required=True, use=lambda s: s.lower()),
+    "password": Arg(text_type, required=True),
 })
 def register(username, password):
     """Register an account."""
@@ -145,7 +146,7 @@ def register(username, password):
 
 @mod.route("/verify", methods=["GET"])
 @use_kwargs({
-    "token": Arg(str, required=True)
+    "token": Arg(text_type, required=True)
 })
 def verify(token):
     """Verify an account."""
@@ -180,14 +181,14 @@ def domain_allowed(email):
 def hash_pass(passwd):
     """Hash the password."""
     c = get_config()
-    return bcrypt.hashpw(str(passwd).encode("utf-8"),
+    return bcrypt.hashpw(text_type(passwd).encode("utf-8"),
         bcrypt.gensalt(int(c.bcrypt.iterations))).decode("utf-8")
 
 
 def check_pass(given, correct):
     """Verify the password."""
-    test = bcrypt.hashpw(str(given).encode("utf-8"),
-        str(correct).encode("utf-8")).decode("utf-8")
+    test = bcrypt.hashpw(text_type(given).encode("utf-8"),
+        text_type(correct).encode("utf-8")).decode("utf-8")
     return correct == test
 
 

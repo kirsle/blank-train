@@ -1,4 +1,5 @@
 from __future__ import unicode_literals, absolute_import
+from six import text_type
 
 """Endpoints for train management."""
 
@@ -33,7 +34,7 @@ def get_train(train_id):
 
 @mod.route("/", methods=["POST"])
 @use_kwargs({
-    "name": Arg(str, required=True),
+    "name": Arg(text_type, required=True),
     "expires": Arg(int, required=True), # expire time in seconds
 })
 @login_required
@@ -77,7 +78,7 @@ def make_train(name, expires):
 
 @mod.route("/<int:train_id>", methods=["PUT"])
 @use_kwargs({
-    "name": Arg(str, required=True),
+    "name": Arg(text_type, required=True),
     "expires": Arg(int, required=True), # expire time in seconds
 })
 @login_required
