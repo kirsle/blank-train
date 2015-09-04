@@ -33,7 +33,7 @@ def get_train(train_id):
 
 @mod.route("/", methods=["POST"])
 @use_kwargs({
-    "name": Arg(unicode, required=True),
+    "name": Arg(str, required=True),
     "expires": Arg(int, required=True), # expire time in seconds
 })
 @login_required
@@ -77,7 +77,7 @@ def make_train(name, expires):
 
 @mod.route("/<int:train_id>", methods=["PUT"])
 @use_kwargs({
-    "name": Arg(unicode, required=True),
+    "name": Arg(str, required=True),
     "expires": Arg(int, required=True), # expire time in seconds
 })
 @login_required

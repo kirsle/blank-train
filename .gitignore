@@ -4,3 +4,6 @@ database.sqlite
 settings.yml
 train/static/bower_components/
 .DS_Store
+
+# Pycharm files
+.idea

@@ -31,8 +31,8 @@ def login_required(f):
 
 @mod.route("/login", methods=["POST"])
 @use_kwargs({
-    "username": Arg(unicode, required=True, use=lambda s: s.lower()),
-    "password": Arg(unicode, required=True),
+    "username": Arg(str, required=True, use=lambda s: s.lower()),
+    "password": Arg(str, required=True),
 })
 def login(username, password):
     """Log into the app."""
@@ -61,7 +61,7 @@ def cas_login():
 
 @mod.route("/cas_callback", methods=["GET"])
 @use_kwargs({
-    "ticket": Arg(unicode, required=True),
+    "ticket": Arg(str, required=True),
 })
 def cas_callback(ticket):
     c = get_config()
@@ -105,8 +105,8 @@ def logout():
 
 @mod.route("/register", methods=["POST"])
 @use_kwargs({
-    "username": Arg(unicode, required=True, use=lambda s: s.lower()),
-    "password": Arg(unicode, required=True),
+    "username": Arg(str, required=True, use=lambda s: s.lower()),
+    "password": Arg(str, required=True),
 })
 def register(username, password):
     """Register an account."""
@@ -131,13 +131,13 @@ def register(username, password):
 
     # Serialize the activation token.
     token = signed_serialize({"t": "activate", "u": user.id})
-    print "Activation token:", token
+    print("Activation token:" + token)
 
     # Email them the token.
     try:
         send_email(username, token)
     except Exception as e:
-        print "Couldn't send mail!", e
+        print("Couldn't send mail! " + e)
 
     return resp(message="Account created. Check your email for "
         "activation link."), CREATED
@@ -145,7 +145,7 @@ def register(username, password):
 
 @mod.route("/verify", methods=["GET"])
 @use_kwargs({
-    "token": Arg(unicode, required=True)
+    "token": Arg(str, required=True)
 })
 def verify(token):
     """Verify an account."""
