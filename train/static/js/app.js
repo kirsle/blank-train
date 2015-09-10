@@ -65,10 +65,6 @@ app.controller("mainCtrl", function($scope, $http, $location) {
             $scope.newTrainExpires = $scope.newTrainExpiresCustom * 60;
         }
 
-        console.log("Train Name: " + $scope.newTrainName);
-        console.log("Train Expires: " + $scope.newTrainExpires);
-        console.log("Custom Time: " + $scope.customInput);
-
         $http.post('/v1/train/', {
             "name": $scope.newTrainName,
             "expires": $scope.newTrainExpires
@@ -93,7 +89,6 @@ app.controller("mainCtrl", function($scope, $http, $location) {
             "password": $scope.password
         })
         .success(function(data, status, headers, config){
-            console.log(data);
             alert(data.message);
         })
         .error(function(data, status, headers, config){
@@ -105,7 +100,6 @@ app.controller("mainCtrl", function($scope, $http, $location) {
     $scope.deleteTrain = function(train){
         $http.delete('/v1/train/'+train.id)
         .success(function(data, status, headers, config){
-            console.log ('successful delete');
             fetchTrains();
             $scope.status.activePage = 'index';
         })
@@ -142,7 +136,6 @@ app.controller("mainCtrl", function($scope, $http, $location) {
             "password": $scope.password
         })
         .success(function(data, status, headers, config){
-            console.log(data);
             $scope.status.loggedIn = true;
             $scope.status.currentUser = $scope.username.toLowerCase();
             fetchTrains();
@@ -158,10 +151,7 @@ app.controller("mainCtrl", function($scope, $http, $location) {
     };
 
     $scope.showCustomInput = function(){
-        console.log("Time selected: " + $scope.newTrainExpires);
         if($scope.newTrainExpires == -1){
-            console.log("Custom time selected");
-
             $scope.status.customInput = true;
             $scope.newTrainExpires = null;
             $scope.newTrainExpiresCustom = null;
