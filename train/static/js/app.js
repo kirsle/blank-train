@@ -44,7 +44,6 @@ app.controller("mainCtrl", function($scope, $http, $location) {
 
     if(window.user !== undefined && window.user !== null){
         $scope.status.loggedIn = true;
-        console.log("User: " + window.user);
         $scope.status.currentUser = window.user.username;
         fetchTrains()
     }
