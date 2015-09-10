@@ -35,14 +35,14 @@ def get_train(train_id):
 @mod.route("/", methods=["POST"])
 @use_kwargs({
     "name": Arg(text_type, required=True),
-    "expires": Arg(text_type, required=True), # expire time in seconds
+    "expires": Arg(int, required=True), # expire time in seconds
 })
 @login_required
 def make_train(name, expires):
     """Make a new train."""
 
     # Turn expiration into a datetime.
-    expiration = datetime.strptime(expires,"%Y-%m-%dT%H:%M:%S.%fZ")
+    expiration = datetime.utcnow() + timedelta(seconds=(expires))
 
     # Make the train.
     train = Train(

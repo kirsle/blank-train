@@ -38,12 +38,13 @@ app.controller("mainCtrl", function($scope, $http, $location) {
         currentUser: null,
         editMode: false,
         loginMethods: window.config.loginMethods,
-        registrationRules: window.config.registration
+        registrationRules: window.config.registration,
+        customInput: false
     };
 
     if(window.user !== undefined && window.user !== null){
         $scope.status.loggedIn = true;
-        console.log(window.user);
+        console.log("User: " + window.user);
         $scope.status.currentUser = window.user.username;
         fetchTrains()
     }
@@ -56,17 +57,24 @@ app.controller("mainCtrl", function($scope, $http, $location) {
     $scope.activateTrainForm = function(){
         $scope.status.newTrain = true;
         $scope.status.activePage = 'train-form';
-    }
+    };
 
     $scope.createTrain = function(){
-        console.log($scope.newTrainName);
-        console.log($scope.newTrainExpires)
+
+        if($scope.status.customInput){
+            $scope.newTrainExpires = $scope.newTrainExpires * 60;
+        }
+
+        console.log("Train Name: " + $scope.newTrainName);
+        console.log("Train Expires: " + $scope.newTrainExpires);
+        console.log("Custom Time: " + $scope.customInput);
+
         $http.post('/v1/train/', {
             "name": $scope.newTrainName,
             "expires": $scope.newTrainExpires
         })
         .success(function(data, status, headers, config){
-            $scope.trains.push(data.result)
+            $scope.trains.push(data.result);
             $scope.status.newTrain = false;
             $scope.newTrainName = null;
             $scope.newTrainExpires = null;
@@ -83,14 +91,14 @@ app.controller("mainCtrl", function($scope, $http, $location) {
             "password": $scope.password
         })
         .success(function(data, status, headers, config){
-            console.log(data)
-            alert(data.message)
+            console.log(data);
+            alert(data.message);
         })
         .error(function(data, status, headers, config){
-            console.log(data)
+            console.log(data);
         });
 
-    }
+    };
 
     $scope.deleteTrain = function(train){
         $http.delete('/v1/train/'+train.id)
@@ -100,9 +108,9 @@ app.controller("mainCtrl", function($scope, $http, $location) {
             $scope.status.activePage = 'index';
         })
         .error(function(data, status, headers, config){
-            console.log(data)
+            console.log(data);
         })
-    }
+    };
 
     $scope.leaveTrain = function(){
         $http.post('/v1/train/'+$scope.status.currentTrain.id+'/leave')
@@ -122,7 +130,7 @@ app.controller("mainCtrl", function($scope, $http, $location) {
             $scope.status.currentTrain.passengers.push($scope.status.currentUser);
         })
         .error(function(data, status, headers, config){
-            console.log(data)
+            console.log(data);
         });
     };
 
@@ -146,5 +154,21 @@ app.controller("mainCtrl", function($scope, $http, $location) {
     $scope.casSignIn = function(){
         window.location = "/v1/account/cas_login";
     };
+
+    $scope.showCustomInput = function(){
+        console.log("Time selected: " + $scope.newTrainExpires);
+        if($scope.newTrainExpires == -1){
+            console.log("Custom time selected");
+
+            $scope.status.customInput = true;
+            $scope.newTrainExpires = null;
+        }
+    };
+
+    $scope.hideCustomInput = function(){
+        $scope.status.customInput = false;
+        $scope.newTrainExpires = null;
+    };
+
 });
 

@@ -53,7 +53,20 @@
         <div class="train-form" ng-class="{'active': status.newTrain}">
             <h1>Conduct New Train</h1>
             <input type="text" placeholder="Train Name..." ng-model="newTrainName">
-            <input type="datetime-local" id="datetimepicker" ng-model="newTrainExpires">
+            <select ng-model="newTrainExpires" ng-change="showCustomInput()" ng-hide="status.customInput">
+                <option value="" disabled selected>Departs...</option>
+                <option value="60">Right Now</option>
+                <option value="360">5 minutes</option>
+                <option value="900">15 minutes</option>
+                <option value="1800">30 minutes</option>
+                <option value="3600">1 hour</option>
+                <option value="7200">2 hours</option>
+                <option value="-1">Custom</option>
+            </select>
+            <div ng-show="status.customInput">
+                Leaving <input type="text" class="minute-input" ng-model="newTrainExpires"> minutes from now.
+                <i class="fa fa-times" ng-click="hideCustomInput()"></i>
+            </div>
 
 
             <button type="button" ng-click="createTrain()">Create Train</button>
@@ -79,16 +92,17 @@
 
 
 
-    <script type="text/javascript">
-        window.user = [[user|tojson]];
-        window.config = {
-          loginMethods: [[config.login_methods|tojson]],
-          registration: [[config.registration|tojson]]
-        };
-    </script>
-    <script src="[[url_for('static', filename='bower_components/moment/moment.js')]]" charset="utf-8"></script>
-    <script src="[[url_for('static', filename='bower_components/angular/angular.js')]]" charset="utf-8"></script>
-    <script src="[[url_for('static', filename='bower_components/angular-moment/angular-moment.js')]]" charset="utf-8"></script>
-    <script src="[[url_for('static', filename='js/app.js')]]" charset="utf-8"></script>
+        <script type="text/javascript">
+            window.user = [[user|tojson]];
+            window.config = {
+              loginMethods: [[config.login_methods|tojson]],
+              registration: [[config.registration|tojson]]
+            };
+        </script>
+        <script src="[[url_for('static', filename='bower_components/moment/moment.js')]]" charset="utf-8"></script>
+        <script src="[[url_for('static', filename='bower_components/angular/angular.js')]]" charset="utf-8"></script>
+        <script src="[[url_for('static', filename='bower_components/angular-moment/angular-moment.js')]]" charset="utf-8"></script>
+        <script src="[[url_for('static', filename='js/app.js')]]" charset="utf-8"></script>
+
     </body>
 </html>
