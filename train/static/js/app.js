@@ -62,7 +62,7 @@ app.controller("mainCtrl", function($scope, $http, $location) {
     $scope.createTrain = function(){
 
         if($scope.status.customInput){
-            $scope.newTrainExpires = $scope.newTrainExpires * 60;
+            $scope.newTrainExpires = $scope.newTrainExpiresCustom * 60;
         }
 
         console.log("Train Name: " + $scope.newTrainName);
@@ -78,6 +78,8 @@ app.controller("mainCtrl", function($scope, $http, $location) {
             $scope.status.newTrain = false;
             $scope.newTrainName = null;
             $scope.newTrainExpires = null;
+            $scope.newTrainExpiresCustom = null;
+            $scope.hideCustomInput();
             $scope.status.activePage = 'index';
         })
         .error(function(data, status, headers, config){
@@ -162,12 +164,14 @@ app.controller("mainCtrl", function($scope, $http, $location) {
 
             $scope.status.customInput = true;
             $scope.newTrainExpires = null;
+            $scope.newTrainExpiresCustom = null;
         }
     };
 
     $scope.hideCustomInput = function(){
         $scope.status.customInput = false;
         $scope.newTrainExpires = null;
+        $scope.newTrainExpiresCustom = null;
     };
 
 });

@@ -42,7 +42,7 @@ def make_train(name, expires):
     """Make a new train."""
 
     # Turn expiration into a datetime.
-    expiration = datetime.utcnow() + timedelta(seconds=(expires))
+    expiration = datetime.utcnow() + timedelta(seconds=expires)
 
     # Make the train.
     train = Train(
@@ -68,8 +68,8 @@ def make_train(name, expires):
             user=g.user.username.split("@")[0],
             name=train_name,
             url=pingback,
-            expires=int((expiration - datetime.utcnow()).seconds / 60),
-            pl="s" if expires != 1 else "",
+            expires=int(expires / 60),
+            pl="s" if int(expires / 60) != 1 else "",
         )
     )
 
