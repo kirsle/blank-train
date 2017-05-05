@@ -10,11 +10,11 @@ or "Another Kind of Sunrise train" in channels like `#lunch` or `#fun-engineerin
 occasionally people would get left out for not paying attention to the chat
 or whatever.
 
-![sad](https://raw.githubusercontent.com/ZEFR-INC/blank-train/master/screenshot/sad.png)
+![sad](https://raw.githubusercontent.com/kirsle/blank-train/master/screenshot/sad.png)
 
 So, enter **The [\_\_\_\_] Train**! It provides a central place to organize trains, join/leave them and see who's all on board so nobody gets left out. It also posts notifications to Slack when a train is created and sends a reminder when it's about to leave.
 
-![Blank Train](https://raw.githubusercontent.com/ZEFR-INC/blank-train/master/screenshot/slack.png)
+![Blank Train](https://raw.githubusercontent.com/kirsle/blank-train/master/screenshot/slack.png)
 
 # Setup
 
